@@ -1,25 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { useEffect } from "react";
+import "./App.css";
+// The confetti package from jsdelivr CDN
+const App = () => {
+  useEffect(() => {
+    // Load confetti script dynamically on component mount
+    const script = document.createElement("script");
+    script.src =
+      "https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js";
+    script.async = true;
+    document.body.appendChild(script);
 
-function App() {
+    // Clean up script when component unmounts
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
+  const handleClick = () => {
+    // Trigger confetti on button click
+    window.confetti({
+      particleCount: 300,
+      spread: 90,
+      origin: { x: 1, y: 0.9 },
+    });
+
+    window.confetti({
+      particleCount: 300,
+      spread: 90,
+      origin: { x: 0, y: 0.9 },
+    });
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="main-container">
+      <button className="fire-btn" onClick={handleClick}>
+        Click Me!
+      </button>
     </div>
   );
-}
+};
 
 export default App;
